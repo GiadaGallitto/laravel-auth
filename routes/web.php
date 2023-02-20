@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+}); 
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])
     ->group(function () {
             Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
+            // Qui posso aggiungere altre rotte che io voglio siano protette da login e collocate in admin
     });
 
 Route::middleware('auth')->group(function () {
@@ -38,3 +39,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+// Questo require serve ad aggiungere tutte le rotte che ci servono sulla autenticazione
