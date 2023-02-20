@@ -19,7 +19,7 @@ class ProjectSeeder extends Seeder
         //
         for($i=0; $i < 15 ; $i++){
             $new_project = new Project();
-            $new_project->title = $faker->title();
+            $new_project->title = $faker->text($maxNbChars = 15);
             $new_project->argument = $faker->text($maxNbChars = 50);
             $new_project->description = $faker->text();
             $new_project->author = $faker->name();
