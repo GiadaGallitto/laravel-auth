@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProjectController as ProjectController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,9 +28,9 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
     ->group(function () {
-            Route::get('/', [DashboardController::class, 'index'])
-            ->name('dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             // Qui posso aggiungere altre rotte che io voglio siano protette da login e collocate in admin
+            Route::resource('/projects', ProjectController::class);
     });
 
 Route::middleware('auth')->group(function () {
