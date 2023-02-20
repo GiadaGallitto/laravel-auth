@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="comic">
+    <div class="project">
         <div class="container">
             <div class="row justify-content-around">
                 <div class="col-12">

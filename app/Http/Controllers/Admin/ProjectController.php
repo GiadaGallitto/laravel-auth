@@ -13,6 +13,39 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $rules;
+    public $messages;
+
+    public function __construct(){
+        $this->rules = [
+            'title'=> 'required|min:5|max:15',
+            'description'=> 'required|min:15',
+            'author'=> 'required',
+            'argument'=> 'required|min:5|max:100',
+            'start_date'=> 'required',
+            'concluded'=> 'required',
+        ];
+
+        $this->messages = [
+            'title.required'=>'Inserisci un titolo',
+            'title.min'=>'Il titolo è troppo corto',
+            'title.max'=>'Riduci i caratteri del titolo',
+
+            'description.required'=>'Serve una descrizione',
+            'description.min'=>'Lunghezza insufficente per la descrizione',
+
+            'author.required'=>'E\' necessario un autore',
+
+            'argument.required'=>'Inserire l\'argomento',
+            'argument.min'=>'Argomento troppo corto',
+            'argument.max'=>'Ridurre la lunghezza dell\'argomento',
+
+            'start_date.required'=>'Serve una data',
+
+            'concluded.required'=>'Inserire lo stato del progetto',
+        ];
+    }
+    
     public function index()
     {
         //
@@ -27,7 +60,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $project = new Project();
+        return view('admin.projects.create', compact('project'));
     }
 
     /**
@@ -38,7 +72,15 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $request->validate($this->rules, $this->messages);
+
+            $newProject = new Project();
+            $newProject->fill($data);
+            $newProject->save();
+
+            return redirect()->route('admin.projects.show', $newProject->id);
     }
 
     /**
