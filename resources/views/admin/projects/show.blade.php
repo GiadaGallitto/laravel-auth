@@ -33,3 +33,7 @@
         </div>
     </div>
 @endsection
+
+@section('script')
+    @vite('resources/js/delete.js')
+@endsection
