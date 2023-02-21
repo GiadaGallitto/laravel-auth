@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -16,40 +18,41 @@ class ProjectController extends Controller
     public $rules;
     public $messages;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->rules = [
-            'title'=> 'required|min:5|max:15',
-            'description'=> 'required|min:15',
-            'author'=> 'required',
-            'argument'=> 'required|min:5|max:100',
-            'start_date'=> 'required',
-            'concluded'=> 'required',
+            'title' => 'required|min:5|max:15',
+            'description' => 'required|min:15',
+            'author' => 'required',
+            'argument' => 'required|min:5|max:100',
+            'start_date' => 'required',
+            'concluded' => 'required',
         ];
 
         $this->messages = [
-            'title.required'=>'Inserisci un titolo',
-            'title.min'=>'Il titolo è troppo corto',
-            'title.max'=>'Riduci i caratteri del titolo',
+            'title.required' => 'Inserisci un titolo',
+            'title.min' => 'Il titolo è troppo corto',
+            'title.max' => 'Riduci i caratteri del titolo',
 
-            'description.required'=>'Serve una descrizione',
-            'description.min'=>'Lunghezza insufficente per la descrizione',
+            'description.required' => 'Serve una descrizione',
+            'description.min' => 'Lunghezza insufficente per la descrizione',
 
-            'author.required'=>'E\' necessario un autore',
+            'author.required' => 'E\' necessario un autore',
 
-            'argument.required'=>'Inserire l\'argomento',
-            'argument.min'=>'Argomento troppo corto',
-            'argument.max'=>'Ridurre la lunghezza dell\'argomento',
+            'argument.required' => 'Inserire l\'argomento',
+            'argument.min' => 'Argomento troppo corto',
+            'argument.max' => 'Ridurre la lunghezza dell\'argomento',
 
-            'start_date.required'=>'Serve una data',
+            'start_date.required' => 'Serve una data',
 
-            'concluded.required'=>'Inserire lo stato del progetto',
+            'concluded.required' => 'Inserire lo stato del progetto',
         ];
     }
-    
+
     public function index()
     {
         //
-        $projects = Project::all();
+        $projects = Project::paginate(20);
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -76,11 +79,13 @@ class ProjectController extends Controller
 
         $request->validate($this->rules, $this->messages);
 
-            $newProject = new Project();
-            $newProject->fill($data);
-            $newProject->save();
+        $data['author'] = Auth::user()->name;
+        $data['slug'] = Str::slug($data['title']);
+        $newProject = new Project();
+        $newProject->fill($data);
+        $newProject->save();
 
-            return redirect()->route('admin.projects.show', $newProject->id);
+        return redirect()->route('admin.projects.index')->with('message', "The project $newProject->title has been created succesfully");
     }
 
     /**
@@ -135,6 +140,6 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect()->route('admin.projects.index');
+        return redirect()->route('admin.projects.index')->with('message', "This element $project->title has been removed")->with('message_class', 'danger');
     }
 }
