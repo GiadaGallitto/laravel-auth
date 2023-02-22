@@ -147,7 +147,7 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect()->route('admin.projects.index')->with('message', "This element $project->title has been removed")->with('message_class', 'danger');
+        return redirect()->route('admin.projects.index')->with('message', "The project $project->title has been moved to the bin")->with('message_class', 'danger');
     }
 
     public function trashed()
@@ -155,5 +155,23 @@ class ProjectController extends Controller
 
         $projects = Project::onlyTrashed()->get();
         return view('admin.projects.trashed', compact('projects'));
+    }
+
+    public function forceDelete($slug)
+    {
+        Project::where('slug', $slug)->withTrashed()->forceDelete();
+        return redirect()->route('admin.projects.trashed')->with('message', "The project $slug has been deleted definitely")->with('message_class', 'danger');
+    }
+
+    public function restoreAll()
+    {
+        Project::onlyTrashed()->restore();
+        return redirect()->route('admin.projects.index')->with('message', "All projects have been successfully restored")->with('message_class', 'success');
+    }
+
+    public function restore( $slug)
+    {
+        Project::where('slug', $slug)->withTrashed()->restore();
+        return redirect()->route('admin.projects.trashed')->with('message', "The project $slug has been successfully restored")->with('message_class', 'success');
     }
 }

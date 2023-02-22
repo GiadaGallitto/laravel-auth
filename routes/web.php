@@ -30,9 +30,9 @@ Route::middleware(['auth', 'verified'])
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             // Qui posso aggiungere altre rotte che io voglio siano protette da login e collocate in admin
             Route::get('/trashed', [ProjectController::class, 'trashed'])->name('projects.trashed');
-            // Route::post('/{project}/restore', [ProjectController::class, 'restore'])->name('projects.restore');
-            // Route::delete('/{project}/force-delete', [ProjectController::class, 'forceDelete'])->name('force-delete');
-            // Route::post('/restore-all', [ProjectController::class, 'restoreAll'])->name('restore-all');
+            Route::post('/{project}/restore', [ProjectController::class, 'restore'])->name('projects.restore');
+            Route::delete('/{project}/force-delete', [ProjectController::class, 'forceDelete'])->name('projects.force-delete');
+            Route::post('/restore-all', [ProjectController::class, 'restoreAll'])->name('projects.restore-all');
             Route::resource('/projects', ProjectController::class);
     });
 
