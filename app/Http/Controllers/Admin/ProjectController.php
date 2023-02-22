@@ -7,6 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -21,18 +22,18 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->rules = [
-            'title' => 'required|min:5|max:15',
+            'title' => 'required|min:5|max:15|unique:projects',
             'description' => 'required|min:15',
             'author' => 'required',
             'argument' => 'required|min:5|max:100',
             'start_date' => 'required',
-            'concluded' => 'required',
         ];
 
         $this->messages = [
             'title.required' => 'Inserire un titolo',
             'title.min' => 'Il titolo è troppo corto',
             'title.max' => 'Ridurre i caratteri del titolo',
+            'title.unique' => 'Questo progetto è già presente nell\' archivio',
 
             'description.required' => 'E\' necessaria una descrizione',
             'description.min' => 'Lunghezza insufficente per la descrizione',
@@ -44,8 +45,6 @@ class ProjectController extends Controller
             'argument.max' => 'Ridurre la lunghezza dell\'argomento',
 
             'start_date.required' => 'E\' necessaria una data',
-
-            'concluded.required' => 'Inserire lo stato del progetto',
         ];
     }
 
@@ -121,17 +120,21 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
         $formData = $request->all();
 
-        $request->validate($this->rules, $this->messages);
+        $newRules = $this->rules;
+        $newRules['title'] = ['required', 'min:5', 'max:15', Rule::unique('projects')->ignore($project->id)];
 
-        $project = Project::findOrFail($id);
+        $request->validate($newRules, $this->messages);
+
+        if (!array_key_exists('concluded', $formData)) {
+            $formData['concluded'] = false;
+        }
 
         $project->update($formData);
-
-        return redirect()->route('admin.projects.show', $project->id);
+        return redirect()->route('admin.projects.index', compact('project'))->with('message', "The project $project->title has been updated succesfully")->with('message_class', 'success');
     }
 
     /**
