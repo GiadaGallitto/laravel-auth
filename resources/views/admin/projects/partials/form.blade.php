@@ -1,8 +1,14 @@
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <h4>Check errors</h4>
+        </div>
+    @endif
+
 <form action="{{ route($route, $project->id) }}" method="POST">
     @csrf
     @method($method)
 
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <div class="alert alert-warning">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -12,36 +18,66 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
 
     <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $project->title) }}">
+        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $project->title) }}">
+        @error ('title')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+        @enderror
     </div>
 
     <div class="mb-3">
         <label for="argument" class="form-label">Argument</label>
-        <input type="text" class="form-control" id="argument" name="argument" value="{{ old('argument', $project->argument )}}">
+        <input type="text" class="form-control @error('argument') is-invalid @enderror" id="argument" name="argument" value="{{ old('argument', $project->argument )}}">
+        @error ('argument')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+        @enderror
     </div>
 
     <div class="mb-3">
         <label for="start_date">Start Date</label>
-        <input type="date" name="start_date" id="start_date" class="form-control" value="{{ old('start_date', $project->start_date )}}">
+        <input type="date" name="start_date" id="start_date" class="form-control @error('start_date') is-invalid @enderror" value="{{ old('start_date', $project->start_date )}}">
+        @error ('start_date')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+        @enderror
     </div>
 
     <div class="mb-3">
         <label for="author">Author</label>
-        <input type="text" class="form-control" id="author" name="author" value="{{ old('author',$project->author) }}">
+        <input type="text" class="form-control @error('author') is-invalid @enderror" id="author" name="author" value="{{ old('author',$project->author) }}">
+        @error ('author')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+        @enderror
     </div>
 
     <div class="mb-3">
         <label for="concluded" class="form-label">Concluded</label>
-        <input type="text" class="form-control" id="concluded" name="concluded" value="{{ old('concluded', $project->concluded) }}">
+        <input type="text" class="form-control @error('concluded') is-invalid @enderror" id="concluded" name="concluded" value="{{ old('concluded', $project->concluded) }}">
+        @error ('concluded')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+        @enderror
     </div>
 
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <input type="text" id="description" class="form-control" name="description" value="{{ old('description', $project->description) }}">
+        <input type="text" id="description" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description', $project->description) }}">
+        @error ('description')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+        @enderror
     </div>
 
     <button type="submit" class="btn btn-primary">Inserisci</button>

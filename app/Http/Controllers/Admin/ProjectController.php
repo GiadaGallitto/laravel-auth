@@ -61,9 +61,9 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Project $project)
     {
-        $project = new Project();
+        // $project = new Project();
         return view('admin.projects.create', compact('project'));
     }
 
