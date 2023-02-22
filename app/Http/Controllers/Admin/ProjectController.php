@@ -135,7 +135,7 @@ class ProjectController extends Controller
         }
 
         $project->update($formData);
-        return redirect()->route('admin.projects.index', compact('project'))->with('message', "The project $project->title has been updated succesfully")->with('message_class', 'success');
+        return redirect()->route('admin.projects.index', compact('project'))->with('message', "The project $project->title has been updated succesfully")->with('alert-type', 'info');
     }
 
     /**
@@ -148,7 +148,7 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect()->route('admin.projects.index')->with('message', "The project $project->title has been moved to the bin")->with('message_class', 'danger');
+        return redirect()->route('admin.projects.index')->with('message', "The project $project->title has been moved to the bin")->with('alert-type', 'warning');
     }
 
     public function trashed()
@@ -161,18 +161,27 @@ class ProjectController extends Controller
     public function forceDelete($slug)
     {
         Project::where('slug', $slug)->withTrashed()->forceDelete();
-        return redirect()->route('admin.projects.trashed')->with('message', "The project $slug has been deleted definitely")->with('message_class', 'danger');
+        return redirect()->route('admin.projects.trashed')->with('message', "The project $slug has been deleted definitely")->with('alert-type', 'warning');
     }
 
     public function restoreAll()
     {
         Project::onlyTrashed()->restore();
-        return redirect()->route('admin.projects.index')->with('message', "All projects have been successfully restored")->with('message_class', 'success');
+        return redirect()->route('admin.projects.index')->with('message', "All projects have been successfully restored")->with('alert-type', 'success');
     }
 
     public function restore( $slug)
     {
         Project::where('slug', $slug)->withTrashed()->restore();
-        return redirect()->route('admin.projects.trashed')->with('message', "The project $slug has been successfully restored")->with('message_class', 'success');
+        return redirect()->route('admin.projects.trashed')->with('message', "The project $slug has been successfully restored")->with('alert-type', 'success');
+    }
+
+    public function enableToggle(Project $project)
+    {
+        $project->concluded = !$project->concluded;
+        $project->save();
+
+        $message = ($project->concluded) ? "concluded" : "not-concluded";
+        return redirect()->back()->with('alert-type', 'success')->with('alert-message', "$project->title:&nbsp;<b>$message</b>");
     }
 }

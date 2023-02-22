@@ -1,20 +1,20 @@
 @extends('layouts.admin')
 
 @section('content')
-    @include('partials.popup')
-
     <div class="container">
 
-        @if (session('message'))
+        @include('partials.popup')
+        {{-- @if (session('message'))
             <div class="alert alert-{{ session('message_class') }}">
                 {{ session('message') }}
             </div>
-        @endif
+        @endif --}}
 
         <div class="row justify-content-around">
             <div class="col-12 d-flex justify-content-end my-3">
                 @if ($trashed)
-                    <a class="btn btn-primary" href="{{ route('admin.projects.trashed') }}"><b>{{ $trashed }}</b> item/s in
+                    <a class="btn btn-outline-warning" href="{{ route('admin.projects.trashed') }}"><b>{{ $trashed }}</b>
+                        item/s in
                         recycled bin</a>
                 @endif
                 <a class="btn btn-outline-primary" href="{{ route('admin.projects.create') }}">
@@ -35,12 +35,21 @@
                 <tbody>
                     @foreach ($projects as $project)
                         <tr>
-                            <th scope="row">{{ $project->id }}</th>
-                            <td>{{ $project->title }}</td>
-                            <td>{{ $project->start_date }}</td>
-                            <td>{{ $project->author }}</td>
-                            <td>{{ $project->concluded }}</td>
-                            <td>
+                            <th scope="row" class="align-middle">{{ $project->id }}</th>
+                            <td class="align-middle">{{ $project->title }}</td>
+                            <td class="align-middle">{{ $project->start_date }}</td>
+                            <td class="align-middle">{{ $project->author }}</td>
+                            <td class="align-middle">
+                                <form action="{{ route('admin.projects.toggle', $project->slug) }}" method="POST">
+                                    @method('PATCH')
+                                    @csrf
+                                    <button type="submit" title="{{ $project->concluded ? 'not-concluded' : 'concluded' }}"
+                                        class="btn btn-outline"><i
+                                            class="fa-2x fa-solid fas fa-fw {{ $project->concluded ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i></button>
+                                </form>
+                            </td>
+                            </td>
+                            <td class="align-middle">
                                 <a class="btn btn-sm btn-outline-primary"
                                     href="{{ route('admin.projects.show', $project->slug) }}">Show</a>
                                 <a class="btn btn-sm btn-outline-warning"
