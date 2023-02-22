@@ -4,20 +4,8 @@
     <div class="project">
         <div class="container">
             <div class="card mt-4 p-4 text-center">
-                <div class="card-header">
-                    <strong>Author: </strong>{{ $project->author }}
-                </div>
-                <div class="card-body">
-                    <div class="card-title">
-                        <h2>{{ $project->title }}</h2>
-                    </div>
-                    <div class="card-subtitle">
-                        <h4>{{ $project->argument }}</h4>
-                    </div>
-                    <p><strong>Description: </strong><br>
-                        {{ $project->description }}
-                    </p>
-                    <a href="{{ route('admin.projects.edit', $project->slug) }}" class="btn btn-outline-warning">
+                <div class="buttons d-flex justify-content-end mb-2">
+                    <a href="{{ route('admin.projects.edit', $project->slug) }}" class="me-2 btn btn-outline-warning d-inline-block">
                         Edit
                     </a>
                     <form class="d-inline-block form-delete" action="{{route('admin.projects.destroy', $project->slug)}}" method="POST" data-element-name="{{$project->title}}">
@@ -25,6 +13,22 @@
                         @method('DELETE')
                         <button class="btn btn-outline-danger">Delete</button>
                     </form>
+                </div>
+                <div>
+                    <h4>
+                        <strong>Author: </strong>{{ $project->author }}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-title mb-3">
+                        <h2>{{ $project->title }}</h2>
+                    </div>
+                    <div class="card-subtitle mb-4">
+                        <h4>{{ $project->argument }}</h4>
+                    </div>
+                    <p><strong>Description: </strong><br>
+                        {{ $project->description }}
+                    </p>
                 </div>
                 <div class="card-footer text-muted">
                     <span><strong>Start date: </strong>{{ $project->start_date }}</span>

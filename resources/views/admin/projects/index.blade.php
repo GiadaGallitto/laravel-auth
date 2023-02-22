@@ -19,7 +19,7 @@
                 <tr>
                     <th scope="col">id</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Argument</th>
+                    <th scope="col">Start Date</th>
                     <th scope="col">Author</th>
                     <th class="col">Concluded</th>
                 </tr>
@@ -29,7 +29,7 @@
                 <tr>
                     <th scope="row">{{$project->id}}</th>
                     <td>{{$project->title}}</td>
-                    <td>{{$project->argument}}</td>
+                    <td>{{$project->start_date}}</td>
                     <td>{{$project->author}}</td>
                     <td>{{$project->concluded}}</td>
                     <td>
