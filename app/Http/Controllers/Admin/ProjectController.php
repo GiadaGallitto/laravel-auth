@@ -30,11 +30,11 @@ class ProjectController extends Controller
         ];
 
         $this->messages = [
-            'title.required' => 'Inserisci un titolo',
+            'title.required' => 'Inserire un titolo',
             'title.min' => 'Il titolo è troppo corto',
-            'title.max' => 'Riduci i caratteri del titolo',
+            'title.max' => 'Ridurre i caratteri del titolo',
 
-            'description.required' => 'Serve una descrizione',
+            'description.required' => 'E\' necessaria una descrizione',
             'description.min' => 'Lunghezza insufficente per la descrizione',
 
             'author.required' => 'E\' necessario un autore',
@@ -43,7 +43,7 @@ class ProjectController extends Controller
             'argument.min' => 'Argomento troppo corto',
             'argument.max' => 'Ridurre la lunghezza dell\'argomento',
 
-            'start_date.required' => 'Serve una data',
+            'start_date.required' => 'E\' necessaria una data',
 
             'concluded.required' => 'Inserire lo stato del progetto',
         ];

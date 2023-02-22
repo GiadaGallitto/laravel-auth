@@ -60,25 +60,24 @@
         @enderror
     </div>
 
-    <div class="mb-3">
-        <label for="concluded" class="form-label">Concluded</label>
-        <input type="text" class="form-control @error('concluded') is-invalid @enderror" id="concluded" name="concluded" value="{{ old('concluded', $project->concluded) }}">
-        @error ('concluded')
-            <div class="invalid-feedback">
-                {{$message}}
-            </div>
-        @enderror
-    </div>
-
+    
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
         <input type="text" id="description" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description', $project->description) }}">
         @error ('description')
-            <div class="invalid-feedback">
-                {{$message}}
-            </div>
+        <div class="invalid-feedback">
+            {{$message}}
+        </div>
         @enderror
     </div>
+    
+    <div class="mb-3">
+        <label for="concluded" class="form-label me-3">Concluded</label>
+        <input type="checkbox" class="form-check-input @error('concluded') is-invalid @enderror" id="concluded" name="concluded" value="1" {{ old('concluded', $project->concluded) ? 'checked' : ''}}>
+    </div>
 
-    <button type="submit" class="btn btn-primary">Inserisci</button>
+    <div class="buttons">
+        <a href="{{route('admin.projects.index')}}" class="btn btn-outline-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 </form>
