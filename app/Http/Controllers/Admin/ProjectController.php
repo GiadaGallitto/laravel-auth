@@ -149,4 +149,11 @@ class ProjectController extends Controller
 
         return redirect()->route('admin.projects.index')->with('message', "This element $project->title has been removed")->with('message_class', 'danger');
     }
+
+    public function trashed()
+    {
+
+        $projects = Project::onlyTrashed()->get();
+        return view('admin.projects.trashed', compact('projects'));
+    }
 }
