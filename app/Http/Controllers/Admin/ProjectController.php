@@ -96,7 +96,11 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show', compact('project'));
+        $nextButton = Project::where('start_date', '<', $project->start_date)->orderBy('start_date', 'DESC')->first();
+
+        $previousButton = Project::where('start_date', '>', $project->start_date)->orderBy('start_date')->first();
+
+        return view('admin.projects.show', compact('project', 'nextButton', 'previousButton'));
     }
 
     /**

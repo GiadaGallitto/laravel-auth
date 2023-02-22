@@ -33,6 +33,14 @@
                 <div class="card-footer text-muted">
                     <span><strong>Start date: </strong>{{ $project->start_date }}</span>
                 </div>
+                <div class="buttons d-flex justify-content-between mt-3">
+                    <a href="{{ route('admin.projects.show', $previousButton->slug) }}" class="btn btn-outline-primary d-inline-block">
+                        Previous
+                    </a>
+                    <a href="{{ route('admin.projects.show', $nextButton->slug) }}" class="btn btn-outline-primary d-inline-block">
+                        Next
+                    </a>
+                </div>
             </div>
         </div>
     </div>
