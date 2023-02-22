@@ -16,7 +16,7 @@
                     <form class="d-inline delete double-confirm" action="{{ route('admin.projects.restore-all') }}"
                         method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-outline-primary" title="restore all">Restore all</button>
+                        <button type="submit" class="btn btn-primary" title="restore all">Restore all</button>
                     </form>
                 @endif
             </div>
@@ -29,21 +29,30 @@
                         <th scope="col">Start Date</th>
                         <th scope="col">Author</th>
                         <th class="col">Concluded</th>
+                        <th class="col text-center">Tools</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($projects as $project)
                         <tr>
-                            <th scope="row">{{ $project->id }}</th>
-                            <td>{{ $project->title }}</td>
-                            <td>{{ $project->start_date }}</td>
-                            <td>{{ $project->author }}</td>
-                            <td>{{ $project->concluded }}</td>
-                            <td>
+                            <th scope="row" class="align-middle">{{ $project->id }}</th>
+                            <td class="align-middle">{{ $project->title }}</td>
+                            <td class="align-middle">{{ $project->start_date }}</td>
+                            <td class="align-middle">{{ $project->author }}</td>
+                            <td class="align-middle">
+                                <form action="{{ route('admin.projects.toggle', $project->slug) }}" method="POST">
+                                    @method('PATCH')
+                                    @csrf
+                                    <button type="submit" title="{{ $project->concluded ? 'not-concluded' : 'concluded' }}"
+                                        class="btn btn-outline"><i
+                                            class="fa-2x fa-solid fas fa-fw {{ $project->concluded ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i></button>
+                                </form>
+                            </td>
+                            <td class="text-center align-middle">
                                 <form class="d-inline-block" action="{{ route('admin.projects.restore', $project->slug) }}"
                                     method="POST" data-element-name="{{ $project->title }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-success">Restore</button>
+                                    <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-window-restore"></i></button>
                                 </form>
 
                                 <form class="d-inline-block form-delete double-confirm"
@@ -51,7 +60,7 @@
                                     data-element-name="{{ $project->title }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

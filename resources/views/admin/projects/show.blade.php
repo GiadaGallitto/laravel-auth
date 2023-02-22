@@ -5,13 +5,13 @@
         <div class="container">
             <div class="card mt-4 p-4 text-center">
                 <div class="buttons d-flex justify-content-end mb-2">
-                    <a href="{{ route('admin.projects.edit', $project->slug) }}" class="me-2 btn btn-outline-warning d-inline-block">
-                        Edit
+                    <a href="{{ route('admin.projects.edit', $project->slug) }}" class="me-2 btn btn-warning d-inline-block">
+                        <i class="fa-solid fa-pencil"></i>
                     </a>
                     <form class="d-inline-block form-delete" action="{{route('admin.projects.destroy', $project->slug)}}" method="POST" data-element-name="{{$project->title}}">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-outline-danger">Delete</button>
+                        <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
                     </form>
                 </div>
                 <div>
@@ -35,17 +35,17 @@
                 </div>
                 <div class="buttons d-flex justify-content-between mt-3">
                     @if (isset($previousButton))                        
-                        <a href="{{ route('admin.projects.show', $previousButton->slug) }}" class="btn btn-outline-primary d-inline-block">
+                        <a href="{{ route('admin.projects.show', $previousButton->slug) }}" class="btn btn-primary d-inline-block">
                     @else
-                        <a href="" class="btn btn-outline-primary d-inline-block disabled">
+                        <a href="" class="btn btn-primary d-inline-block disabled">
                     @endif
                             Previous
                         </a>
 
                     @if(isset($nextButton))                        
-                        <a href="{{ route('admin.projects.show', $nextButton->slug) }}" class="btn btn-outline-primary d-inline-block">
+                        <a href="{{ route('admin.projects.show', $nextButton->slug) }}" class="btn btn-primary d-inline-block">
                     @else
-                        <a href="" class="btn btn-outline-primary d-inline-block disabled">
+                        <a href="" class="btn btn-primary d-inline-block disabled">
                     @endif
                             Next
                         </a>

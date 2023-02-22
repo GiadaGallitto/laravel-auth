@@ -13,11 +13,11 @@
         <div class="row justify-content-around">
             <div class="col-12 d-flex justify-content-end my-3">
                 @if ($trashed)
-                    <a class="btn btn-outline-warning" href="{{ route('admin.projects.trashed') }}"><b>{{ $trashed }}</b>
+                    <a class="btn btn-danger me-3" href="{{ route('admin.projects.trashed') }}"><b>{{ $trashed }}</b>
                         item/s in
                         recycled bin</a>
                 @endif
-                <a class="btn btn-outline-primary" href="{{ route('admin.projects.create') }}">
+                <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">
                     Add new Project
                 </a>
             </div>
@@ -30,6 +30,7 @@
                         <th scope="col">Start Date</th>
                         <th scope="col">Author</th>
                         <th class="col">Concluded</th>
+                        <th class="col text-center">Tools</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,18 +50,18 @@
                                 </form>
                             </td>
                             </td>
-                            <td class="align-middle">
-                                <a class="btn btn-sm btn-outline-primary"
-                                    href="{{ route('admin.projects.show', $project->slug) }}">Show</a>
-                                <a class="btn btn-sm btn-outline-warning"
-                                    href="{{ route('admin.projects.edit', $project->slug) }}">Edit</a>
+                            <td class="align-middle text-center">
+                                <a class="btn btn-dark"
+                                    href="{{ route('admin.projects.show', $project->slug) }}"><i class="fa-solid fa-eye"></i></a>
+                                <a class="btn btn-dark"
+                                    href="{{ route('admin.projects.edit', $project->slug) }}"><i class="fa-solid fa-pencil"></i></a>
 
                                 <form class="d-inline-block form-delete"
                                     action="{{ route('admin.projects.destroy', $project->slug) }}" method="POST"
                                     data-element-name="{{ $project->title }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button class="btn btn-dark"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>
                             </td>
                         </tr>

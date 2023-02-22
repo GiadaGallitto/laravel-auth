@@ -4,17 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+            <div class="card mt-3">
+                <div class="card-header"><h4>Welcome {{$user->name}}!</h4></div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                    <h6>You are logged in!</h6>
+                    <p>Visit the site through the buttons to be able to view and manage your projects in your database directly from here!</p>
                 </div>
             </div>
         </div>

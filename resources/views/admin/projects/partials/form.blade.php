@@ -77,7 +77,7 @@
     </div>
 
     <div class="buttons">
-        <a href="{{route('admin.projects.index')}}" class="btn btn-outline-secondary">Cancel</a>
+        <a href="{{route('admin.projects.index')}}" class="btn btn-dark me-2"><i class="fa-solid fa-arrow-left"></i> Cancel</a>
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
