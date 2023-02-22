@@ -50,9 +50,10 @@ class ProjectController extends Controller
 
     public function index()
     {
-        //
         $projects = Project::orderBy('start_date', 'DESC')->paginate(20);
-        return view('admin.projects.index', compact('projects'));
+        
+        $trashed = Project::onlyTrashed()->get()->count();
+        return view('admin.projects.index', compact('projects', 'trashed'));
     }
 
     /**

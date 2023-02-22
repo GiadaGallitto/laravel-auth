@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@include('partials.popup')
+
 @section('content')
     <div class="container">
 
@@ -11,12 +13,14 @@
         <div class="row justify-content-around">
             <div class="col-12 d-flex justify-content-end my-3">
                 @if (count($projects))
-                    <form class="d-inline delete double-confirm" action="{{ route('admin.projects.restore-all') }}" method="POST">
+                    <form class="d-inline delete double-confirm" action="{{ route('admin.projects.restore-all') }}"
+                        method="POST">
                         @csrf
                         <button type="submit" class="btn btn-outline-primary" title="restore all">Restore all</button>
                     </form>
                 @endif
             </div>
+
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -28,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($projects as $project)
+                    @foreach ($projects as $project)
                         <tr>
                             <th scope="row">{{ $project->id }}</th>
                             <td>{{ $project->title }}</td>
@@ -36,14 +40,13 @@
                             <td>{{ $project->author }}</td>
                             <td>{{ $project->concluded }}</td>
                             <td>
-                                <form class="d-inline-block"
-                                    action="{{ route('admin.projects.restore', $project->slug) }}" method="POST"
-                                    data-element-name="{{ $project->title }}">
+                                <form class="d-inline-block" action="{{ route('admin.projects.restore', $project->slug) }}"
+                                    method="POST" data-element-name="{{ $project->title }}">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-outline-success">Restore</button>
                                 </form>
 
-                                <form class="d-inline-block form-delete"
+                                <form class="d-inline-block form-delete double-confirm"
                                     action="{{ route('admin.projects.force-delete', $project->slug) }}" method="POST"
                                     data-element-name="{{ $project->title }}">
                                     @csrf
@@ -52,13 +55,14 @@
                                 </form>
                             </td>
                         </tr>
-                    @empty
-                        <h3>
-                            No items in the bin
-                        </h3>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
+            @if ($projects->isEmpty())
+                <div class="empty-message mt-3 text-muted">
+                    <h5>No items in the bin</h5>
+                </div>
+            @endif
         </div>
 
     </div>
