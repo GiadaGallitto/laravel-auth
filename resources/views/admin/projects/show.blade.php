@@ -23,6 +23,9 @@
                     <div class="card-title mb-3">
                         <h2>{{ $project->title }}</h2>
                     </div>
+                    <div class="card-image mb-3">
+                        <img src="{{asset('storage/' . $project->image)}}" alt="project-image" class="img-fluid">
+                    </div>
                     <div class="card-subtitle mb-4">
                         <h4>{{ $project->argument }}</h4>
                     </div>

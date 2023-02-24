@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -27,6 +28,7 @@ class ProjectController extends Controller
             'author' => 'required',
             'argument' => 'required|min:5|max:100',
             'start_date' => 'required',
+            'image' => 'required|image'
         ];
 
         $this->messages = [
@@ -45,6 +47,9 @@ class ProjectController extends Controller
             'argument.max' => 'Ridurre la lunghezza dell\'argomento',
 
             'start_date.required' => 'E\' necessaria una data',
+
+            'image.required' =>'Inserire un immagine',
+            'image.required' =>'Il formato è errato',
         ];
     }
 
@@ -81,6 +86,8 @@ class ProjectController extends Controller
 
         $data['author'] = Auth::user()->name;
         $data['slug'] = Str::slug($data['title']);
+        $data['image'] = Storage::put('imgs/', $data['image']);
+
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
