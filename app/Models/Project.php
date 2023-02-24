@@ -18,8 +18,11 @@ class Project extends Model
      *
      * @return string
      */
-    public function getRouteKeyName()
-    {
+    public function getRouteKeyName(){
         return 'slug';
+    }
+
+    public function isImageUrl(){
+        return filter_var($this->image, FILTER_VALIDATE_URL);
     }
 }

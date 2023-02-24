@@ -28,7 +28,7 @@ class ProjectController extends Controller
             'author' => 'required',
             'argument' => 'required|min:5|max:100',
             'start_date' => 'required',
-            'image' => 'required|image'
+            'image' => 'required'
         ];
 
         $this->messages = [
@@ -49,7 +49,6 @@ class ProjectController extends Controller
             'start_date.required' => 'E\' necessaria una data',
 
             'image.required' =>'Inserire un immagine',
-            'image.image' =>'Il formato è errato',
         ];
     }
 
@@ -145,6 +144,10 @@ class ProjectController extends Controller
             $formData['concluded'] = false;
         }
 
+        if($project->isImageUrl()){
+            Storage::delete($project->image);
+        }
+
         $project->update($formData);
         return redirect()->route('admin.projects.index', compact('project'))->with('message', "The project $project->title has been updated succesfully")->with('alert-type', 'info');
     }
@@ -157,8 +160,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if($project->isImageUrl()){
+            Storage::delete($project->image);
+        }
         $project->delete();
-
         return redirect()->route('admin.projects.index')->with('message', "The project $project->title has been moved to the bin")->with('alert-type', 'warning');
     }
 

@@ -72,6 +72,16 @@
     </div>
 
     <div class="mb-3">
+        <label for="image" class="form-label">Image url</label>
+        <input type="text" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image', $project->image) }}">
+        @error ('image')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+        @enderror
+    </div>
+
+    <div class="mb-3">
         <label for="image" class="form-label">Image file</label>
         <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" value="{{'image', $project->image}}">
         @error ('image')

@@ -24,7 +24,11 @@
                         <h2>{{ $project->title }}</h2>
                     </div>
                     <div class="card-image mb-3">
+                        @if (str_starts_with($project->image, 'http'))
+                        <img src="{{$project->image}}" alt="project-image" class="img-fluid">
+                        @else
                         <img src="{{asset('storage/' . $project->image)}}" alt="project-image" class="img-fluid">
+                        @endif
                     </div>
                     <div class="card-subtitle mb-4">
                         <h4>{{ $project->argument }}</h4>
