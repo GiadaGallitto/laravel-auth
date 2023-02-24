@@ -5,11 +5,11 @@
 @section('content')
     <div class="container">
 
-        @if (session('message'))
+        {{-- @if (session('message'))
             <div class="alert alert-{{ session('message_class') }}">
                 {{ session('message') }}
             </div>
-        @endif
+        @endif --}}
         <div class="row justify-content-around">
             <div class="col-12 d-flex justify-content-end my-3">
                 @if (count($projects))
@@ -45,14 +45,14 @@
                                     @csrf
                                     <button type="submit" title="{{ $project->concluded ? 'not-concluded' : 'concluded' }}"
                                         class="btn btn-outline"><i
-                                            class="fa-2x fa-solid fas fa-fw {{ $project->concluded ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i></button>
+                                            class="fa-2x fa-solid fas fa-fw {{ $project->concluded ? 'fa-toggle-off' : 'fa-toggle-on' }}"></i></button>
                                 </form>
                             </td>
                             <td class="text-center align-middle">
                                 <form class="d-inline-block" action="{{ route('admin.projects.restore', $project->slug) }}"
                                     method="POST" data-element-name="{{ $project->title }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-success"><i class="fa-solid fa-window-restore"></i></button>
+                                    <button type="submit" title="Restore" class="btn btn-sm btn-success"><i class="fa-solid fa-window-restore"></i></button>
                                 </form>
 
                                 <form class="d-inline-block form-delete double-confirm"
@@ -60,7 +60,7 @@
                                     data-element-name="{{ $project->title }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                    <button type="submit" title="Delete" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

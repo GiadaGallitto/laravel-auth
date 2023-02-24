@@ -46,14 +46,14 @@
                                     @csrf
                                     <button type="submit" title="{{ $project->concluded ? 'not-concluded' : 'concluded' }}"
                                         class="btn btn-outline"><i
-                                            class="fa-2x fa-solid fas fa-fw {{ $project->concluded ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i></button>
+                                            class="fa-2x fa-solid fas fa-fw {{ $project->concluded ? 'fa-toggle-off' : 'fa-toggle-on' }}"></i></button>
                                 </form>
                             </td>
                             </td>
                             <td class="align-middle text-center">
-                                <a class="btn btn-dark"
+                                <a title="Show" class="btn btn-dark"
                                     href="{{ route('admin.projects.show', $project->slug) }}"><i class="fa-solid fa-eye"></i></a>
-                                <a class="btn btn-dark"
+                                <a title="Edit" class="btn btn-dark"
                                     href="{{ route('admin.projects.edit', $project->slug) }}"><i class="fa-solid fa-pencil"></i></a>
 
                                 <form class="d-inline-block form-delete"
@@ -61,7 +61,7 @@
                                     data-element-name="{{ $project->title }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-dark"><i class="fa-solid fa-trash-can"></i></button>
+                                    <button title="Delete" class="btn btn-dark"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>
                             </td>
                         </tr>

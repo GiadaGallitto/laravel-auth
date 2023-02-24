@@ -4,7 +4,7 @@
         </div>
     @endif
 
-<form action="{{ route($route, $project->slug) }}" method="POST">
+<form action="{{ route($route, $project->slug) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method($method)
 
