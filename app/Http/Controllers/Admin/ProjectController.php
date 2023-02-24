@@ -49,7 +49,7 @@ class ProjectController extends Controller
             'start_date.required' => 'E\' necessaria una data',
 
             'image.required' =>'Inserire un immagine',
-            'image.required' =>'Il formato è errato',
+            'image.image' =>'Il formato è errato',
         ];
     }
 
@@ -81,6 +81,10 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+
+        if (!array_key_exists('concluded', $data)) {
+            $data['concluded'] = false;
+        }
 
         $request->validate($this->rules, $this->messages);
 

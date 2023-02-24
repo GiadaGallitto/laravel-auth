@@ -44,9 +44,9 @@
                                 <form action="{{ route('admin.projects.toggle', $project->slug) }}" method="POST">
                                     @method('PATCH')
                                     @csrf
-                                    <button type="submit" title="{{ $project->concluded ? 'not-concluded' : 'concluded' }}"
+                                    <button type="submit" title="{{ $project->concluded ? 'concluded' : 'not-concluded' }}"
                                         class="btn btn-outline"><i
-                                            class="fa-2x fa-solid fas fa-fw {{ $project->concluded ? 'fa-toggle-off' : 'fa-toggle-on' }}"></i></button>
+                                            class="fa-2x fa-solid fas fa-fw {{ $project->concluded ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i></button>
                                 </form>
                             </td>
                             </td>
